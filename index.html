@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<html>
+    <head>
+    <title>Grade 10 Classmate System</title>
+
+
+    <link rel="stylesheet" href="https://pyscript.net/releases/2024.1.1/core.css">
+    <script type="module" src="https://pyscript.net/releases/2024.1.1/core.js"></script>
+
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+
+
+    <style>
+        body {
+            background-color: #ffd2e8;
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+        }
+
+        .custom-navbar {
+            position: sticky;
+            top: 0;
+            left: 0;
+            right: 0;
+            width: 100%;
+            z-index: 1000;
+            background: #ffffff;
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08);
+            padding: 0.8rem 1rem;
+            border-radius: 0;
+        }
+
+        .custom-navbar .navbar-brand {
+            color: #ff4081;
+            font-weight: 700;
+            letter-spacing: 0.02em;
+            font-size: 1.1rem;
+        }
+
+        .custom-navbar .navbar-brand:hover {
+            color: #ff77a9;
+        }
+
+        .custom-navbar .nav-link {
+            color: #222222;
+            font-weight: 500;
+            margin-left: 1rem;
+        }
+
+        .custom-navbar .nav-link:hover,
+        .custom-navbar .nav-link.active {
+            color: #ff4081;
+        }
+
+        .custom-navbar .navbar-toggler {
+            border-color: rgba(0, 0, 0, 0.12);
+        }
+
+        .custom-navbar .navbar-toggler-icon {
+            filter: invert(0);
+        }
+
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .page-header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .page-header h1 {
+            font-size: 32px;
+            font-weight: 800;
+            color: #1a1a1a;
+            margin: 0;
+        }
+
+        .page-header p {
+            color: #4d4d4d;
+            margin: 8px 0 0 0;
+        }
+
+        .input-card {
+            background: #ffffff;
+            border-radius: 18px;
+            padding: 24px;
+            margin-bottom: 20px;
+            box-shadow: 0 10px 30px rgba(255, 116, 179, 0.15);
+        }
+
+        .input-group {
+            margin-bottom: 14px;
+        }
+
+        .input-group input {
+            width: 100%;
+            padding: 14px;
+            border: 1px solid #f0d4e6;
+            border-radius: 12px;
+            font-size: 15px;
+            background: #fff0f7;
+            color: #3c3c3c;
+        }
+
+        .input-group input::placeholder {
+            color: #b84b7d;
+        }
+
+        .button-group {
+            display: flex;
+            gap: 10px;
+            margin-top: 18px;
+        }
+
+        .btn-add {
+            flex: 1;
+            padding: 14px;
+            background-color: #ff3b94;
+            color: white;
+            border: none;
+            border-radius: 12px;
+            font-weight: bold;
+            cursor: pointer;
+            font-size: 15px;
+        }
+
+        .btn-add:hover {
+            background-color: #ff6ab8;
+        }
+
+        .btn-show {
+            flex: 1;
+            padding: 14px;
+            background-color: #161616;
+            color: white;
+            border: none;
+            border-radius: 12px;
+            font-weight: bold;
+            cursor: pointer;
+            font-size: 15px;
+        }
+
+        .btn-show:hover {
+            background-color: #343434;
+        }
+
+        .list-card {
+            background: #ffffff;
+            border-radius: 18px;
+            padding: 24px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+        }
+
+        .list-title {
+            font-size: 18px;
+            font-weight: 800;
+            color: #1a1a1a;
+            margin-bottom: 18px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .list-title::before {
+            content: "📋";
+            font-size: 20px;
+        }
+
+        .classmate-entry {
+            padding: 14px 0;
+            border-bottom: 1px solid #f1e1ed;
+            color: #292929;
+        }
+
+        .classmate-entry:last-child {
+            border-bottom: none;
+        }
+
+        .top-bar {
+            position: sticky;
+            top: 0;
+            left: 0;
+            right: 0;
+            width: 100%;
+            z-index: 1000;
+            background-color: #ffffff;
+            color: #1a1a1a;
+            padding: 15px 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
+        }
+
+        .top-bar .logo-section {
+            display: flex;
+            align-items: center;
+            font-size: 24px;
+            font-weight: 700;
+            color: #ff3b94;
+        }
+
+        .top-bar .nav-links a {
+            color: #1a1a1a;
+            text-decoration: none;
+            margin-left: 20px;
+            font-weight: 600;
+            transition: opacity 0.2s ease;
+        }
+
+        .top-bar .nav-links a:hover {
+            opacity: 0.8;
+        }
+
+        .page-header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .page-header h1 {
+            font-size: 28px;
+            font-weight: bold;
+            color: #333;
+            margin: 0;
+        }
+
+        .page-header p {
+            color: #999;
+            margin: 5px 0 0 0;
+        }
+    </style>
+     
+</head>
+
+
+<body>
+
+
+    <header class="top-bar">
+        <div class="logo-section">
+            <span>10-Sapphire</span>
+        </div>
+        <nav class="nav-links">
+            <a href="index.html">Classmates</a>
+            <a href="attendance.html">Attendance</a>
+            <a href="gallery.html">Gallery</a>
+        </nav>
+    </header>
+
+
+    <div class="container">
+        <div class="page-header">
+            <h1>📘 Grade 10 Classmates System</h1>
+            <p>Add and view all your classmates</p>
+        </div>
+
+
+        <div class="input-card" id="add">
+            <div class="input-group">
+                <input type="text" id="nameInput" placeholder="Name">
+            </div>
+            <div class="input-group">
+                <input type="text" id="sectionInput" placeholder="Section">
+            </div>
+            <div class="input-group">
+                <input type="text" id="subjectInput" placeholder="Sport">
+            </div>
+            <div class="button-group">
+                <button class="btn-add" onclick="addClassmate()">Add Classmate</button>
+                <button class="btn-show" onclick="showList()">Show List</button>
+            </div>
+        </div>
+
+
+        <div class="list-card" id="list">
+            <div class="list-title">Classmate List</div>
+            <div id="classmatesList"></div>
+        </div>
+    </div>
+
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+
+    <script>
+        let classmates = [
+            { name: 'Charlotte', section: 'Topaz', sport: 'volleyball' },
+            { name: 'Athena', section: 'Topaz', sport: 'badminton' },
+            { name: 'Max', section: 'Topaz', sport: 'badminton' },
+            { name: 'KC', section: 'Topaz', sport: 'badminton' },
+            { name: 'Kleiser', section: 'Topaz', sport: 'basketball' },
+            { name: 'Alonso', section: 'Topaz', sport: 'baseball' },
+            { name: 'Cade', section: 'Topaz', sport: 'basketball' },
+            { name: 'Jared', section: 'Topaz', sport: 'volleyball' },
+            { name: 'Inigo', section: 'Topaz', sport: 'basketball' },
+            { name: 'Zoe', section: 'Topaz', sport: 'figure skating' },
+            { name: 'Jaedin', section: 'Topaz', sport: 'basketball' },
+            { name: 'Zyan', section: 'Topaz', sport: 'badminton' },
+            { name: 'AC', section: 'Topaz', sport: 'basketball' },
+            { name: 'Curt', section: 'Topaz', sport: 'basketball' },
+            { name: 'Briana', section: 'Topaz', sport: 'badminton' },
+            { name: 'Ethan', section: 'Topaz', sport: 'baseball' },
+            { name: 'Sophia', section: 'Topaz', sport: 'swimming' },
+            { name: 'Javi', section: 'Topaz', sport: 'boxing' },
+            { name: 'Luis', section: 'Topaz', sport: 'badminton' },
+            { name: 'Enzo', section: 'Topaz', sport: 'football' },
+            { name: 'Yanna', section: 'Topaz', sport: 'volleyball' },
+            { name: 'Victor', section: 'Topaz', sport: 'basketball' },
+            { name: 'Kayla', section: 'Topaz', sport: 'volleyball' },
+            { name: 'Kyler', section: 'Topaz', sport: 'basketball' }
+        ];
+
+
+        function addClassmate() {
+            const name = document.getElementById('nameInput').value.trim();
+            const section = document.getElementById('sectionInput').value.trim();
+            const sport = document.getElementById('subjectInput').value.trim();
+
+
+            if (name && section && sport) {
+                classmates.push({ name, section, sport });
+                document.getElementById('nameInput').value = '';
+                document.getElementById('sectionInput').value = '';
+                document.getElementById('subjectInput').value = '';
+                alert('Classmate added successfully!');
+            } else {
+                alert('Please fill in all fields');
+            }
+        }
+
+
+        function showList() {
+            const listDiv = document.getElementById('classmatesList');
+
+
+            if (classmates.length === 0) {
+                listDiv.innerHTML = '<p style="color: #999;">No classmates added yet.</p>';
+                return;
+            }
+
+
+            const customOrder = [
+                'Max', 'Alonso', 'Enzo', 'Victor', 'Kayla', 'Athena', 'Cade', 'Zyan',
+                'Radhika', 'Mara', 'Kleiser', 'Curt', 'Ethan', 'Sophia', 'Javi', 'AC',
+                'Soleil', 'Yanna', 'Zoe', 'Luis', 'Inigo', 'Kyler', 'Jaedin', 'Briana',
+                'Charlotte', 'Jared', 'KC'
+            ];
+
+
+            const sortedClassmates = classmates.slice().sort((a, b) => {
+                const indexA = customOrder.indexOf(a.name);
+                const indexB = customOrder.indexOf(b.name);
+
+
+                if (indexA === -1 && indexB === -1) {
+                    return a.name.toLowerCase().localeCompare(b.name.toLowerCase());
+                }
+                if (indexA === -1) return 1;
+                if (indexB === -1) return -1;
+                return indexA - indexB;
+            });
+
+
+            listDiv.innerHTML = sortedClassmates.map(classmate =>
+                `<div class="classmate-entry">Hi! I am ${classmate.name} from ${classmate.section}, and my favorite sport is ${classmate.sport}.</div>`
+            ).join('');
+        }
+    </script>
+
+
+</body>
